@@ -1,36 +1,25 @@
-
-class Header extends React.Component {
-  render() {
-    return <p>This is from Header.</p>;
+class IndecisionApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      options: ['Option Uno', 'Option Dos', 'Option Tres', 'yo'],
+    };
   }
-}
-
-const jsx = (
-  <div>
-    <h1>Title</h1>
-    <Header />
-    <Header />
-  </div>
-);
-
-ReactDOM.render(jsx, document.getElementById('app'));
-
-class IndecsionApp extends React.Component {
   render() {
     const title = 'Indecision';
     const subtitle = 'My computer is my BFF';
-    const options = ['Option Uno', 'Option Dos', 'Option Tres'];
 
     return (
       <div>
         <Header title={title} subtitle={subtitle} />
-        <Action />
-        <Options options={options} />
+        <Action hasOptions={this.state.options.length > 0} />
+        <Options options={this.state.options} />
         <AddOption />
       </div>
     );
   }
 }
+
 class Header extends React.Component {
   render() {
     return (
@@ -50,13 +39,21 @@ class Action extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.handlePick}>What should I do?</button>
+        <button onClick={this.handlePick} disabled={!this.props.hasOptions}>
+          What should I do?
+        </button>
       </div>
     );
   }
 }
 
 class Options extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleRemoveall = this.handleRemoveAll.bind(this);
+  }
+
   handleRemoveAll() {
     console.log(this.props.options);
     // console.log('remove all test');
@@ -65,7 +62,7 @@ class Options extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleRemoveAll.bind(this)}>Remove All</button>
+        <button onClick={this.handleRemoveAll}>Remove All</button>
         <p>Options here</p>
         {this.props.options.map(option => (
           <Option key={option} optionText={option} />
@@ -80,7 +77,7 @@ class Option extends React.Component {
   render() {
     return (
       <div>
-        <p>options here</p>
+        <p>{this.props.optionText}</p>
       </div>
     );
   }
@@ -110,4 +107,4 @@ class AddOption extends React.Component {
   }
 }
 
-ReactDOM.render(<IndecsionApp />, document.getElementById('app'));
+ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
