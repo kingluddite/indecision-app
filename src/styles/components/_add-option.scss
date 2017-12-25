@@ -9,7 +9,12 @@
 
   &__form {
     display: flex;
+    flex-direction: column;
     padding: $m-size;
+    
+    @media (min-width: $desktop-breakpoint) {
+      flex-direction: row;
+    }
   }
 
   &__input {
@@ -18,7 +23,14 @@
     border-bottom: 0.3rem solid darken($dark-blue, 10%);
     color: $off-white;
     flex-grow: 1;
-    margin-right: $s-size;
+    margin: 0 0 $s-size 0;
+
+    @media (min-width: $desktop-breakpoint) {
+      margin: 0 $s-size 0 0;
+    }
     padding: $s-size;
   }
+
 }
+
+
